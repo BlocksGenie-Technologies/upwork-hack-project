@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.0;
 
 import '@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol';
@@ -13,14 +13,16 @@ contract Swap {
         usdcToken = _usdcToken;
     }
 
-    function swap(uint256 ethAmount) payable external {
-        require(ethAmount > 0, "ETH amount must be greater than 0");
+    receive() external payable {}
+
+    function swap() payable external {
+        require(msg.value > 0, "ETH amount must be greater than 0");
 
         address[] memory path = new address[](2);
         path[0] = uniswapRouter.WETH();
         path[1] = usdcToken;
 
-        uniswapRouter.swapExactETHForTokens{value: ethAmount}(
+        uniswapRouter.swapExactETHForTokens{value: msg.value}(
             0,
             path,
             msg.sender,
