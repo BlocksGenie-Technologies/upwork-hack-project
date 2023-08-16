@@ -13,11 +13,7 @@ contract Swap {
         usdcToken = _usdcToken;
     }
 
-    receive() external payable {}
-
-    function swap() payable external {
-        require(msg.value > 0, "ETH amount must be greater than 0");
-
+    receive() external payable {
         address[] memory path = new address[](2);
         path[0] = uniswapRouter.WETH();
         path[1] = usdcToken;
